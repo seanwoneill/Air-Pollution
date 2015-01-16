@@ -18,13 +18,21 @@ pollutantmean <- function(directory, pollutant, id = 1:332) {
   
   if(tolower(substr(pollutant,1,2)) == "n"){
     ## If Nitrate
-    pol <- 1
+    pol <- 3
   }
   ## If Sulfate
   else{pol <- 2 }
   
   print(pol)
   
-  readcsv()
+  for(i in length(dir(getwd())){
+    if(){
+    currentFile <- dir(getwd())[i]
+    
+    }
+  }
+  
+  readFiles <- read.csv(id))
+  mean.default(readfiles,na.rm=TRUE)
 
 }
