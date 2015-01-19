@@ -1,10 +1,9 @@
 
-setwd("C:\\Users\\sean\\Courses\\Coursera R Programming\\Project 1 Data\\specdata")
 pollutantmean <- function(directory = getwd(), pollutant = "sulfate", id = 1:332) {
   
-  setwd(directory)
-  
-  if(tolower(substr(toString(pollutant),1,2)) == "n"){
+  directory <- getwd()
+
+  if( (substr(tolower(toString(pollutant)),1,1)) == "n"){
     ## If Nitrate
     pol <- 3
   }
@@ -17,20 +16,20 @@ pollutantmean <- function(directory = getwd(), pollutant = "sulfate", id = 1:332
     currentFileNum <- as.integer(substr(dir(directory)[i],1,3))
     if(currentFileNum %in% id){
       temp <- read.csv(currentFilePath)
-      temp <- temp[pol]
+      temp <- temp[[pol]]
       temp <- na.omit(temp)
       if (exists("store")){ ##if not first instance and store is object
-        store <- paste(store,temp,sep="",collapse="")
-        #store <- union(store,temp)
+        store <- c(store,temp)
       }else{ ##if first instance and store not yet object
-        store = temp
+        store <- temp
       }
     }
-    rm(temp)
+    if(exists("temp")){
+      rm(temp)  
+    }
   }
-  
-  store <- matrix(store,ncol=10)
-  write(store,file = normalizePath("store.txt"))
-  final <- mean(store)
+
+  #write.csv(store,file = normalizePath("store.csv"))
+  final <- mean(store,strip.white=TRUE,na.rm = TRUE)
   return(final)
 }
